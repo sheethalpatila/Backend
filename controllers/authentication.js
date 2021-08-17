@@ -110,7 +110,7 @@ res.clearCookie("token");
 
 exports.isSignedIn = expressJwt({
     //secret :process.env.SECRET
-    secret: 'photography',
+    secret: process.env.SECRET,
     userProperty : "auth"
 })
 

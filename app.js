@@ -16,7 +16,8 @@ const productRoutes = require("./routes/product");
 const oderRoutes = require("./routes/order");
 
 //payment
-const stripeRoutes = require("./routes/stripePayment")
+const stripeRoutes = require("./routes/stripePayment");
+const { response } = require('express');
 
 
 //using midlwares use by  reading documentations 
@@ -34,14 +35,25 @@ app.use(cors());
 
 // database connectivity section 
 //if u use .env then write process.env.DATABASE use it instead of single quote and write thissingle quoted code in .env file 
-mongoose.connect( 'mongodb+srv://sheethal:sapatil9164042089@cluster0.jffyz.mongodb.net/photography?retryWrites=true&w=majority ',
-{
+const DATABASE = "mongodb+srv://sheethal:sapatil9164042089@cluster0.jffyz.mongodb.net/photography?retryWrites=true&w=majority";
+
+mongoose
+  .connect(DATABASE, {
     useNewUrlParser: true,
- useUnifiedTopology: true,
- useCreateIndex:true
-}).then (() => {
-    console.log ("DB CONNECTED")
-}).catch ("DB is having problem ");
+    useUnifiedTopology: true,
+    useCreateIndex: true
+  })
+  .then(() => {
+    console.log("DB CONNECTED");
+  });
+// mongoose.connect( 'mongodb+srv://sheethal:sapatil9164042089@cluster0.jffyz.mongodb.net/photography?retryWrites=true&w=majority ',
+// {
+//     useNewUrlParser: true,
+//  useUnifiedTopology: true,
+//  useCreateIndex:true
+// }).then (() => {
+//     console.log ("DB CONNECTED")
+// }).catch ("DB is having problem ");
 
 
 // routes 
@@ -56,6 +68,7 @@ app.use ("/api" , productRoutes);
 app.use("/api" , oderRoutes);
 
 app.use("/api" , stripeRoutes);
+
 
 
 //for do not exposing our database connection to others or securing from external objects we have used process.env.PORT 
